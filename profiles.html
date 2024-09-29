@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Profiles</title>
+</head>
+<body>
+<h1>User Profiles</h1>
+<div id="profile-list"></div>
+
+<script>
+  fetch('userProfiles.json')
+          .then(response => {
+            if (!response.ok) throw new Error('Fetch error: ' + response.status);
+            return response.json();
+          })
+          .then(json => {
+            let output = '';
+            json.forEach(user => {
+              output += `<p><strong>Name:</strong> ${user.firstName} ${user.lastName}, <strong>Email:</strong> ${user.email}, <strong>Date of Birth:</strong> ${user.dateOfBirth}</p>`;
+            });
+            document.getElementById('profile-list').innerHTML = output;
+          })
+          .catch(err => console.error('Error loading JSON:', err));
+</script>
+</body>
+</html>
